@@ -1,58 +1,198 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Learning Mathematics Center
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
 </p>
 
-## About Laravel
+<p align="center">
+  <a href="https://github.com/laravel/framework"><img src="https://img.shields.io/badge/Laravel-13.17-red.svg" alt="Laravel Version"></a>
+  <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.3-blue.svg" alt="PHP Version"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ပရောဂျက် အကြောင်း
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Learning Mathematics Center သည် သင်္ချာသင်တန်းလေ့ကျင့်ရေးစင်တာများအတွက် ရည်ရွယ်ထားသော Laravel framework ဖြင့် တည်ဆောက်ထားသည့် စီမံခန့်ခွဲမှုစနစ်တစ်ခုဖြစ်သည်။ ဤစနစ်သည် ကျောင်းသားများ၊ ဆရာများ၊ ဘာသာရပ်များ၊ ငွေစာရင်းများနှင့် အခြားစီမံခန့်ခွဲမှုလုပ်ငန်းများကို ထိရောက်စွာစီမံခန့်ခွဲနိုင်ရန် ဒီဇိုင်းထုတ်ထားသည်။
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## အဓိက စွမ်းဆောင်ချက်များ
 
-## Learning Laravel
+### 🎓 ကျောင်းသား စီမံခန့်ခွဲမှု
+- ကျောင်းသားများကို မှတ်ပုံတင်ခြင်းနှင့် စီမံခန့်ခွဲခြင်း
+- ကျောင်းသားအခြေအနေကို စီစစ်ခြင်း (Active/Inactive)
+- ကျောင်းသားကျောင်းလစ်နှင့် အခွန်စာရင်းများ စီမံခန့်ခွဲခြင်း
+- ကျောင်းသားအခြေအနေမှတ်တမ်းများ ထိန်းသိမ်းခြင်း
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 👨‍🏫 ဆရာ စီမံခန့်ခွဲမှု
+- ဆရာများကို မှတ်ပုံတင်ခြင်းနှင့် စီမံခန့်ခွဲခြင်း
+- ဆရာလစာစာရင်းများ စီမံခန့်ခွဲခြင်း
+- ဆရာအခြေအနေကို စီစစ်ခြင်း (Active/Inactive)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 📚 ဘာသာရပ်နှင့် အဆင့် စီမံခန့်ခွဲမှု
+- ဘာသာရပ်များကို စီမံခန့်ခွဲခြင်း
+- အဆင့်များ (Grades) ကို စီမံခန့်ခွဲခြင်း
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 💰 ငွေစာရင်း စီမံခန့်ခွဲမှု
+- ကုန်ကျစရိတ်များကို စီမံခန့်ခွဲခြင်း
+- ကုန်ကျစရိတ်အမျိုးအစားများကို စီမံခန့်ခွဲခြင်း
+- အရောင်းပစ္စည်းများကို စီမံခန့်ခွဲခြင်း
+- ဘောင်ချာများ (Vouchers) နှင့် ငွေပေးချေမှုများကို စီမံခန့်ခွဲခြင်း
+- ငွေလွှဲများ (Invoices) ကို စီမံခန့်ခွဲခြင်း
 
-## Agentic Development
+### 📊 ဒက်ရှ်ဘုတ်
+- ကျောင်းသားဦးရေ၊ ဘာသာရပ်ဦးရေ၊ လစဉ်ဝင်ငွေနှင့် ကုန်ကျစရိတ်များကို ကြည့်ရှုနိုင်ခြင်း
+- လစဉ်နှင့် နှစ်စဉ် ဝင်ငွေ/ကုန်ကျစရိတ် အချက်အလက်များကို ဂရပ်ဖ်များဖြင့် ပြသခြင်း
+- ကျောင်းသားဦးရေ ပြောင်းလဲမှုများကို ခန့်မှန်းနိုင်ခြင်း
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 👤 အသုံးပြုသူ စီမံခန့်ခွဲမှု
+- အသုံးပြုသူများကို စီမံခန့်ခွဲခြင်း
+- စာရွက်စာတမ်းများကို လုံခြုံစွာ စီမံခန့်ခွဲခြင်း
+- စာဝှက်ပြောင်းလဲမှုများကို စီမံခန့်ခွဲခြင်း
+
+## လိုအပ်ချက်များ
+
+- PHP >= 8.3
+- Composer
+- MySQL / PostgreSQL / SQLite
+- Node.js & NPM (for frontend assets)
+
+## ထည့်သွင်းပုံ
+
+### 1. Repository ကို Clone လုပ်ပါ
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/soenyinyiaung/learning-mathematics-center.git
+cd learning-mathematics-center
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Dependencies များကို ထည့်သွင်းပါ
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Environment ဖိုင်ကို ပြင်ဆင်ပါ
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`.env` ဖိုင်ထဲတွင် database အချက်အလက်များကို ပြင်ဆင်ပါ:
 
-## Security Vulnerabilities
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=learning_mathematics_center
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Database ကို တည်ဆောက်ပါ
+
+```bash
+php artisan migrate
+```
+
+### 5. Frontend assets များကို build လုပ်ပါ
+
+```bash
+npm run build
+```
+
+### 6. Development server ကို စတင်ပါ
+
+```bash
+php artisan serve
+```
+
+အခြား terminal တစ်ခုတွင် Vite development server ကို စတင်ပါ:
+
+```bash
+npm run dev
+```
+
+### 7. Application ကို ဝင်ရောက်ပါ
+
+Browser တွင် `http://localhost:8000` ကို ဖွင့်ပါ။
+
+## အသုံးပြုပုံ
+
+### စတင်အသုံးပြုရန်
+
+1. Login page တွင် admin credentials ဖြင့် login လုပ်ပါ
+2. Dashboard တွင် အဓိကအချက်အလက်များကို ကြည့်ရှုနိုင်ပါသည်
+3. Sidebar မှ လိုအပ်သော section ကို ရွေးချယ်ပါ
+
+### API Endpoints
+
+ဤ application တွင် RESTful API endpoints များ ပါဝင်သည်:
+
+- `GET/POST/PUT/DELETE /api/grades` - အဆင့်များ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/subjects` - ဘာသာရပ်များ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/students` - ကျောင်းသားများ စီမံခန့်ခွဲရန်
+- `POST /api/students/{id}/toggle-status` - ကျောင်းသားအခြေအနေ ပြောင်းလဲရန်
+- `GET/POST/PUT/DELETE /api/teachers` - ဆရာများ စီမံခန့်ခွဲရန်
+- `POST /api/teachers/{id}/toggle-status` - ဆရာအခြေအနေ ပြောင်းလဲရန်
+- `GET/POST/PUT/DELETE /api/teacher-salaries` - ဆရာလစာများ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/expenses` - ကုန်ကျစရိတ်များ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/expense-categories` - ကုန်ကျစရိတ်အမျိုးအစားများ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/users` - အသုံးပြုသူများ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/sale-items` - အရောင်းပစ္စည်းများ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/vouchers` - ဘောင်ချာများ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/invoices` - ငွေလွှဲများ စီမံခန့်ခွဲရန်
+- `GET/POST/PUT/DELETE /api/payments` - ငွေပေးချေမှုများ စီမံခန့်ခွဲရန်
+- `POST /api/settings/change-password` - စာဝှက်ပြောင်းလဲရန်
+
+## Database Schema
+
+ဤ application တွင် အောက်ပါ database tables များ ပါဝင်သည်:
+
+- `users` - အသုံးပြုသူများ
+- `grades` - အဆင့်များ
+- `subjects` - ဘာသာရပ်များ
+- `students` - ကျောင်းသားများ
+- `student_status_logs` - ကျောင်းသားအခြေအနေမှတ်တမ်းများ
+- `teachers` - ဆရာများ
+- `teacher_salaries` - ဆရာလစာများ
+- `expense_categories` - ကုန်ကျစရိတ်အမျိုးအစားများ
+- `expenses` - ကုန်ကျစရိတ်များ
+- `sale_items` - အရောင်းပစ္စည်းများ
+- `vouchers` - ဘောင်ချာများ
+- `invoices` - ငွေလွှဲများ
+- `payments` - ငွေပေးချေမှုများ
+
+## Development
+
+### Testing
+
+```bash
+php artisan test
+```
+
+### Code Style
+
+```bash
+./vendor/bin/pint
+```
+
+### Database Migration
+
+```bash
+php artisan migrate
+php artisan migrate:rollback
+php artisan migrate:fresh
+```
+
+## ပံ့ပိုးကူညီမှု
+
+ဤ project ကို support ပေးလိုပါက issues တင်နိုင်ပါသည် သို့မဟုတ် pull requests ပို့နိုင်ပါသည်။
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+ဤ project သည် MIT License အောက်တွင် open-source အဖြစ် လွှင့်တင်ထားသည်။
+
+## အသိပေးချက်
+
+ဤ project သည် Laravel framework ကို အခြေခံထားသည်။ Laravel အကြောင်းကို [Laravel Documentation](https://laravel.com/docs) တွင် ဖတ်ရှုနိုင်ပါသည်။
