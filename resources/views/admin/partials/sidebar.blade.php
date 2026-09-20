@@ -1,0 +1,97 @@
+<aside x-cloak 
+      x-show="sidebarOpen || !sidebarHidden" 
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="-translate-x-full opacity-0"
+      x-transition:enter-end="translate-x-0 opacity-100"
+      x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="translate-x-0 opacity-100"
+      x-transition:leave-end="-translate-x-full opacity-0"
+      :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
+      class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white lg:relative lg:translate-x-0 flex flex-col overflow-hidden shrink-0">
+    <div class="p-4 flex items-center justify-between border-b border-gray-700">
+        <h1 class="text-xl font-bold mb-0 whitespace-nowrap">Admin Panel</h1>
+        <button @click="toggleSidebarOpen()" class="lg:hidden text-gray-300 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+    
+    <div class="flex-1 px-4 overflow-y-auto">
+        <nav class="space-y-2">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Dashboard</span>
+            </a>
+            <a href="{{ route('admin.students') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.students') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Students List</span>
+            </a>
+            <a href="{{ route('admin.student-fees') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.student-fees') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Student Fees</span>
+            </a>
+            <a href="{{ route('admin.teachers') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.teachers') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Teachers List</span>
+            </a>
+            <a href="{{ route('admin.teacher-salaries') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.teacher-salaries') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Teacher Salaries</span>
+            </a>
+            <a href="{{ route('admin.expenses') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.expenses') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Expenses</span>
+            </a>
+            <a href="{{ route('admin.sales') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.sales') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Sales</span>
+            </a>
+            <a href="{{ route('admin.vouchers') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.vouchers') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Vouchers</span>
+            </a>
+            <a href="{{ route('admin.subjects') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.subjects') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Subjects</span>
+            </a>
+            <a href="{{ route('admin.grades') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.grades') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Grades</span>
+            </a>
+            <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.users') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span class="truncate whitespace-nowrap">Users</span>
+            </a>
+            <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-2 rounded {{ request()->routeIs('admin.settings') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300 hover:text-white' }} transition-colors">
+                <i class="fas fa-cog w-5 h-5 flex-shrink-0 text-center"></i>
+                <span class="truncate whitespace-nowrap">Settings</span>
+            </a>
+        </nav>
+    </div>
+</aside>
+
+<!-- Mobile overlay -->
+<div x-cloak x-show="sidebarOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="toggleSidebarOpen()" class="fixed inset-0 z-40 lg:hidden bg-black/50"></div>
