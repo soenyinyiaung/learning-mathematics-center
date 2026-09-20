@@ -131,7 +131,7 @@
                                             <td class="border border-gray-300 px-2 py-1 text-xs" x-text="index + 1"></td>
                                             <td class="border border-gray-300 px-2 py-1 text-xs" x-text="cartItem.name"></td>
                                             <td class="border border-gray-300 px-2 py-1 text-center text-xs" x-text="cartItem.qty"></td>
-                                            <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'$' + (parseFloat(cartItem.amount) * cartItem.qty).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></td>
+                                            <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'MMK ' + (parseFloat(cartItem.amount) * cartItem.qty).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></td>
                                         </tr>
                                     </template>
                                 </tbody>
@@ -143,7 +143,7 @@
                             <div class="flex justify-end">
                                 <div class="w-48">
                                     <label class="block text-xs font-medium text-gray-700 mb-1">TOTAL:</label>
-                                    <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 font-bold text-right text-base" x-text="'$' + cartTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></div>
+                                    <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 font-bold text-right text-base" x-text="'MMK ' + cartTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></div>
                                 </div>
                             </div>
                         </div>

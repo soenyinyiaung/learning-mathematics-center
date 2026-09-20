@@ -21,21 +21,23 @@
                         <tr class="border-b border-gray-200">
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">ID</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">Name</th>
-                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Created At</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Students</th>
                             <th class="text-right py-3 px-4 font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <template x-for="subject in subjects" :key="subject.id">
-                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <tr class="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" @click="window.location.href='/admin/subjects/' + subject.id">
                                 <td class="py-3 px-4 text-gray-600" x-text="subject.id"></td>
                                 <td class="py-3 px-4 text-gray-800 font-medium" x-text="subject.name"></td>
-                                <td class="py-3 px-4 text-gray-600" x-text="new Date(subject.created_at).toLocaleDateString()"></td>
+                                <td class="py-3 px-4 text-gray-600">
+                                    <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-sm font-medium" x-text="subject.students_count || 0"></span>
+                                </td>
                                 <td class="py-3 px-4 text-right">
-                                    <button @click="editSubject(subject)" class="text-indigo-600 hover:text-indigo-800 mr-3 cursor-pointer">
+                                    <button @click.stop="editSubject(subject)" class="text-indigo-600 hover:text-indigo-800 mr-3 cursor-pointer">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button @click="deleteSubject(subject.id)" class="text-red-600 hover:text-red-800 cursor-pointer">
+                                    <button @click.stop="deleteSubject(subject.id)" class="text-red-600 hover:text-red-800 cursor-pointer">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
@@ -70,12 +72,14 @@
             <div class="p-6 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-800">Add New Subject</h3>
             </div>
-            <div class="p-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Subject Name</label>
-                <input type="text" x-model="newSubjectName" @keyup.enter="addSubject()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter subject name">
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Subject Name</label>
+                    <input type="text" x-model="newSubject.name" @keyup.enter="addSubject()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter subject name">
+                </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showAddModal = false; newSubjectName = ''" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showAddModal = false; newSubject = {name: ''}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="addSubject()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Add Subject</button>
             </div>
         </div>
@@ -87,12 +91,14 @@
             <div class="p-6 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-800">Edit Subject</h3>
             </div>
-            <div class="p-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Subject Name</label>
-                <input type="text" x-model="editSubjectName" @keyup.enter="updateSubject()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter subject name">
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Subject Name</label>
+                    <input type="text" x-model="editSubjectData.name" @keyup.enter="updateSubject()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter subject name">
+                </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showEditModal = false; editSubjectName = ''; editingSubject = null" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showEditModal = false; editSubjectData = {name: ''}; editingSubject = null" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="updateSubject()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Update Subject</button>
             </div>
         </div>

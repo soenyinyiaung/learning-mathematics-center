@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Teacher extends Model
@@ -14,7 +15,6 @@ class Teacher extends Model
         'phone',
         'nrc_id',
         'employment_type',
-        'subject_id',
         'status'
     ];
 
@@ -22,9 +22,9 @@ class Teacher extends Model
         'status' => 'boolean',
     ];
 
-    public function subject(): BelongsTo
+    public function subjects(): BelongsToMany
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsToMany(Subject::class, 'teacher_subject');
     }
 
     public function salaries(): HasMany

@@ -121,7 +121,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Income (This Month)</p>
-                    <p class="text-2xl font-bold text-gray-800">${{ number_format($thisMonthIncome, $thisMonthIncome == floor($thisMonthIncome) ? 0 : 2) }}</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ number_format($thisMonthIncome, $thisMonthIncome == floor($thisMonthIncome) ? 0 : 2) }}</p>
                 </div>
                 <div class="bg-yellow-100 p-3 rounded-full">
                     <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,7 +135,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Expense (This Month)</p>
-                    <p class="text-2xl font-bold text-gray-800">${{ number_format($thisMonthExpense, $thisMonthExpense == floor($thisMonthExpense) ? 0 : 2) }}</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ number_format($thisMonthExpense, $thisMonthExpense == floor($thisMonthExpense) ? 0 : 2) }}</p>
                 </div>
                 <div class="bg-red-100 p-3 rounded-full">
                     <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

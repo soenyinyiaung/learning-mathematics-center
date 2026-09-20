@@ -47,6 +47,7 @@
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">Birthday</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">NRC</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">Grade</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Subjects</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">Guardian</th>
                             <th class="text-right py-3 px-4 font-semibold text-gray-700">Actions</th>
@@ -62,6 +63,18 @@
                                 <td class="py-3 px-4 text-gray-600" x-text="new Date(student.birthday).toLocaleDateString()"></td>
                                 <td class="py-3 px-4 text-gray-600" x-text="student.nrc_id"></td>
                                 <td class="py-3 px-4 text-gray-600" x-text="student.grade ? student.grade.name : 'N/A'"></td>
+                                <td class="py-3 px-4 text-gray-600">
+                                    <template x-if="student.subjects && student.subjects.length > 0">
+                                        <div class="flex flex-wrap gap-1">
+                                            <template x-for="subject in student.subjects" :key="subject.id">
+                                                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded" x-text="subject.name"></span>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <template x-if="!student.subjects || student.subjects.length === 0">
+                                        <span class="text-gray-400">No subjects</span>
+                                    </template>
+                                </td>
                                 <td class="py-3 px-4 text-gray-600">
                                     <button @click="toggleStudentStatus(student.id)" class="cursor-pointer hover:text-indigo-600 transition-colors" title="Toggle Status">
                                         <i :class="student.status ? 'fas fa-toggle-on text-green-600' : 'fas fa-toggle-off text-gray-400'"></i>
@@ -159,9 +172,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="border-t border-gray-200 pt-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Subjects</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <template x-for="subject in subjects" :key="subject.id">
+                            <div class="flex items-center">
+                                <input type="checkbox" :id="'subject-add-' + subject.id" 
+                                       :value="subject.id" 
+                                       x-model="newStudent.subject_ids"
+                                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label :for="'subject-add-' + subject.id" class="ml-2 block text-sm text-gray-900" x-text="subject.name"></label>
+                            </div>
+                        </template>
+                    </div>
+                </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showAddModal = false; newStudent = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: ''}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showAddModal = false; newStudent = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: '', subject_ids: []}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="addStudent()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Add Student</button>
             </div>
         </div>
@@ -222,13 +249,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="border-t border-gray-200 pt-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Subjects</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <template x-for="subject in subjects" :key="subject.id">
+                            <div class="flex items-center">
+                                <input type="checkbox" :id="'subject-edit-' + subject.id" 
+                                       :value="subject.id" 
+                                       x-model="editStudentData.subject_ids"
+                                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label :for="'subject-edit-' + subject.id" class="ml-2 block text-sm text-gray-900" x-text="subject.name"></label>
+                            </div>
+                        </template>
+                    </div>
+                </div>
                 <div class="flex items-center">
                     <input type="checkbox" x-model="editStudentData.status" id="editStudentStatus" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                     <label for="editStudentStatus" class="ml-2 block text-sm text-gray-900">Active Student</label>
                 </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showEditModal = false; editStudentData = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: ''}; editingStudent = null" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showEditModal = false; editStudentData = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: '', status: true, subject_ids: []}; editingStudent = null" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="updateStudent()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Update Student</button>
             </div>
         </div>

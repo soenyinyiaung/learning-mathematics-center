@@ -33,7 +33,7 @@
                             </div>
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-sm text-gray-600">Price:</span>
-                                <span class="text-xl font-bold text-green-600" x-text="'$' + parseFloat(item.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
+                                <span class="text-xl font-bold text-green-600" x-text="'MMK ' + parseFloat(item.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
                             </div>
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-sm text-gray-600">Available:</span>
@@ -80,7 +80,7 @@
                             </div>
                             <div class="flex items-center justify-between mb-2">
                                 <span class="text-sm text-gray-600">Price:</span>
-                                <span class="font-semibold text-green-600" x-text="'$' + parseFloat(cartItem.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
+                                <span class="font-semibold text-green-600" x-text="'MMK ' + parseFloat(cartItem.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
                             </div>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
@@ -88,7 +88,7 @@
                                     <span class="w-8 text-center font-medium" x-text="cartItem.qty"></span>
                                     <button @click="updateCartQty(index, 1)" class="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded flex items-center justify-center text-gray-700">+</button>
                                 </div>
-                                <span class="font-semibold text-indigo-600" x-text="'$' + (parseFloat(cartItem.amount) * cartItem.qty).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
+                                <span class="font-semibold text-indigo-600" x-text="'MMK ' + (parseFloat(cartItem.amount) * cartItem.qty).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
                             </div>
                         </div>
                     </template>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="flex justify-between items-center mb-4">
                             <span class="text-gray-600">Total Price:</span>
-                            <span class="font-bold text-green-600" x-text="'$' + cartTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
+                            <span class="font-bold text-green-600" x-text="'MMK ' + cartTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></span>
                         </div>
                         <button @click="checkout()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg transition-colors">
                             <i class="fas fa-check mr-2"></i>Checkout

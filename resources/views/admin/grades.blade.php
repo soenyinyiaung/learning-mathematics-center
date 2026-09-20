@@ -21,7 +21,7 @@
                         <tr class="border-b border-gray-200">
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">ID</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700">Name</th>
-                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Created At</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Students</th>
                             <th class="text-right py-3 px-4 font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -30,7 +30,9 @@
                             <tr class="border-b border-gray-100 hover:bg-gray-50">
                                 <td class="py-3 px-4 text-gray-600" x-text="grade.id"></td>
                                 <td class="py-3 px-4 text-gray-800 font-medium" x-text="grade.name"></td>
-                                <td class="py-3 px-4 text-gray-600" x-text="new Date(grade.created_at).toLocaleDateString()"></td>
+                                <td class="py-3 px-4 text-gray-600">
+                                    <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-sm font-medium" x-text="grade.students_count || 0"></span>
+                                </td>
                                 <td class="py-3 px-4 text-right">
                                     <button @click="editGrade(grade)" class="text-indigo-600 hover:text-indigo-800 mr-3 cursor-pointer">
                                         <i class="fas fa-edit"></i>

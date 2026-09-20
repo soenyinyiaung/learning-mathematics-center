@@ -12,7 +12,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::paginate(40);
+        $subjects = Subject::withCount('students')->paginate(40);
         return response()->json($subjects);
     }
 
@@ -60,5 +60,31 @@ class SubjectController extends Controller
         $subject = Subject::findOrFail($id);
         $subject->delete();
         return response()->json(null, 204);
+    }
+
+    /**
+     * Get students for a specific subject.
+     */
+    public function getStudents(string $id, Request $request)
+    {
+        $subject = Subject::findOrFail($id);
+        $query = $subject->students()->with('grade');
+        
+        if ($request->has('grade_id') && $request->grade_id) {
+            $query->where('grade_id', $request->grade_id);
+        }
+        
+        $students = $query->paginate($request->get('per_page', 10));
+        return response()->json($students);
+    }
+
+    /**
+     * Get teachers for a specific subject.
+     */
+    public function getTeachers(string $id, Request $request)
+    {
+        $subject = Subject::findOrFail($id);
+        $teachers = $subject->teachers()->paginate($request->get('per_page', 10));
+        return response()->json($teachers);
     }
 }

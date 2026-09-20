@@ -2,6 +2,7 @@ export default function studentManagement() {
     return {
         students: [],
         grades: [],
+        subjects: [],
         loading: false,
         showAddModal: false,
         showEditModal: false,
@@ -15,7 +16,8 @@ export default function studentManagement() {
             nrc_id: '',
             grade_id: '',
             guardian_name: '',
-            guardian_contact: ''
+            guardian_contact: '',
+            subject_ids: []
         },
         editStudentData: {
             student_id: '',
@@ -26,7 +28,8 @@ export default function studentManagement() {
             grade_id: '',
             guardian_name: '',
             guardian_contact: '',
-            status: true
+            status: true,
+            subject_ids: []
         },
         currentPage: 1,
         lastPage: 1,
@@ -77,6 +80,16 @@ export default function studentManagement() {
                 console.error('Error fetching grades:', error);
             }
         },
+
+        async fetchSubjects() {
+            try {
+                const response = await fetch('/api/subjects');
+                const data = await response.json();
+                this.subjects = data.data;
+            } catch (error) {
+                console.error('Error fetching subjects:', error);
+            }
+        },
         
         async addStudent() {
             if (!this.newStudent.student_id.trim() || !this.newStudent.name.trim()) return;
@@ -100,7 +113,8 @@ export default function studentManagement() {
                         nrc_id: '',
                         grade_id: '',
                         guardian_name: '',
-                        guardian_contact: ''
+                        guardian_contact: '',
+                        subject_ids: []
                     };
                     this.showAddModal = false;
                     await this.fetchStudents(this.currentPage);
@@ -120,7 +134,9 @@ export default function studentManagement() {
                 nrc_id: student.nrc_id,
                 grade_id: student.grade_id,
                 guardian_name: student.guardian_name,
-                guardian_contact: student.guardian_contact
+                guardian_contact: student.guardian_contact,
+                status: student.status,
+                subject_ids: student.subjects ? student.subjects.map(s => s.id) : []
             };
             this.showEditModal = true;
         },
@@ -147,7 +163,9 @@ export default function studentManagement() {
                         nrc_id: '',
                         grade_id: '',
                         guardian_name: '',
-                        guardian_contact: ''
+                        guardian_contact: '',
+                        status: true,
+                        subject_ids: []
                     };
                     this.editingStudent = null;
                     this.showEditModal = false;
@@ -202,6 +220,7 @@ export default function studentManagement() {
         init() {
             this.fetchStudents();
             this.fetchGrades();
+            this.fetchSubjects();
             
             // Set active tab based on URL
             const path = window.location.pathname;

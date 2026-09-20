@@ -2,21 +2,25 @@ export default function studentFeeManagement() {
     return {
         invoices: [],
         students: [],
+        grades: [],
+        gradeSubjectFees: [],
         loading: false,
         showGenerateModal: false,
-        showHistoryModal: false,
         selectedMonthYear: '',
         selectedAmount: '',
+        selectedGrade: '',
         selectedStudentIds: [],
         selectAllStudents: false,
-        selectedStudent: null,
-        studentInvoices: [],
         searchQuery: '',
         filterStatus: '',
+        showEditModal: false,
+        editingInvoice: null,
         
         async init() {
             await this.fetchInvoices();
             await this.fetchStudents();
+            await this.fetchGrades();
+            await this.fetchGradeSubjectFees();
         },
         
         async fetchStudents() {
@@ -28,6 +32,30 @@ export default function studentFeeManagement() {
                 }
             } catch (error) {
                 console.error('Error fetching students:', error);
+            }
+        },
+        
+        async fetchGrades() {
+            try {
+                const response = await fetch('/api/grades');
+                if (response.ok) {
+                    const data = await response.json();
+                    this.grades = data.data || data;
+                }
+            } catch (error) {
+                console.error('Error fetching grades:', error);
+            }
+        },
+        
+        async fetchGradeSubjectFees() {
+            try {
+                const response = await fetch('/api/grade-subject-fees');
+                if (response.ok) {
+                    const data = await response.json();
+                    this.gradeSubjectFees = data.data || data;
+                }
+            } catch (error) {
+                console.error('Error fetching grade subject fees:', error);
             }
         },
         
@@ -78,10 +106,22 @@ export default function studentFeeManagement() {
         
         toggleSelectAllStudents() {
             if (this.selectAllStudents) {
-                this.selectedStudentIds = this.students.map(s => s.id);
+                this.selectedStudentIds = this.filteredStudents.map(s => s.id);
             } else {
                 this.selectedStudentIds = [];
             }
+        },
+        
+        get filteredStudents() {
+            if (!this.selectedGrade) {
+                return this.students;
+            }
+            return this.students.filter(s => s.grade_id == this.selectedGrade);
+        },
+        
+        filterStudentsByGrade() {
+            this.selectedStudentIds = [];
+            this.selectAllStudents = false;
         },
         
         async generateInvoices() {
@@ -90,14 +130,19 @@ export default function studentFeeManagement() {
                 return;
             }
             
-            if (!this.selectedAmount || this.selectedAmount <= 0) {
-                alert('Please enter amount');
-                return;
-            }
-            
             if (this.selectedStudentIds.length === 0) {
                 alert('Please select at least one student');
                 return;
+            }
+            
+            // Calculate auto amounts if amount is blank
+            const payload = {
+                month_year: this.selectedMonthYear,
+                student_ids: this.selectedStudentIds
+            };
+            
+            if (this.selectedAmount && this.selectedAmount > 0) {
+                payload.amount = this.selectedAmount;
             }
             
             try {
@@ -107,11 +152,7 @@ export default function studentFeeManagement() {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({
-                        month_year: this.selectedMonthYear,
-                        amount: this.selectedAmount,
-                        student_ids: this.selectedStudentIds
-                    })
+                    body: JSON.stringify(payload)
                 });
                 
                 if (response.ok) {
@@ -120,9 +161,13 @@ export default function studentFeeManagement() {
                     this.showGenerateModal = false;
                     this.selectedMonthYear = '';
                     this.selectedAmount = '';
+                    this.selectedGrade = '';
                     this.selectedStudentIds = [];
                     this.selectAllStudents = false;
                     await this.fetchInvoices();
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.message);
                 }
             } catch (error) {
                 console.error('Error generating invoices:', error);
@@ -137,18 +182,69 @@ export default function studentFeeManagement() {
             window.location.href = '/admin/student-fees/checkout';
         },
         
-        async viewHistory(student) {
-            this.selectedStudent = student;
-            this.showHistoryModal = true;
+        editInvoice(invoice) {
+            this.editingInvoice = { ...invoice };
+            this.showEditModal = true;
+        },
+        
+        async updateInvoice() {
+            if (!this.editingInvoice) return;
+            
+            if (!this.editingInvoice.amount || this.editingInvoice.amount < 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
             
             try {
-                const response = await fetch(`/api/invoices?student_id=${student.id}`);
+                const response = await fetch(`/api/invoices/${this.editingInvoice.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        amount: this.editingInvoice.amount
+                    })
+                });
+                
                 if (response.ok) {
                     const data = await response.json();
-                    this.studentInvoices = data.data || [];
+                    alert('Invoice updated successfully');
+                    this.showEditModal = false;
+                    this.editingInvoice = null;
+                    await this.fetchInvoices();
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.message);
                 }
             } catch (error) {
-                console.error('Error fetching student invoices:', error);
+                console.error('Error updating invoice:', error);
+                alert('Failed to update invoice. Please try again.');
+            }
+        },
+        
+        async deleteInvoice(invoice) {
+            if (!confirm('Are you sure you want to delete this invoice?')) return;
+            
+            try {
+                const response = await fetch(`/api/invoices/${invoice.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+                
+                if (response.ok) {
+                    alert('Invoice deleted successfully');
+                    await this.fetchInvoices();
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Error deleting invoice:', error);
+                alert('Failed to delete invoice. Please try again.');
             }
         }
     };

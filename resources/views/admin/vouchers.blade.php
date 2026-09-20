@@ -50,7 +50,7 @@
                                               :class="voucher.customer_type === 'student' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'"
                                               x-text="voucher.customer_type === 'student' ? 'Student' : 'General'"></span>
                                     </td>
-                                    <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold" x-text="'$' + parseFloat(voucher.total_amount).toFixed(2)"></td>
+                                    <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold" x-text="'MMK ' + parseFloat(voucher.total_amount).toFixed(2)"></td>
                                     <td class="px-4 py-3 text-center">
                                         <button @click="viewVoucher(voucher)" class="text-indigo-600 hover:text-indigo-800 cursor-pointer">
                                             <i class="fas fa-eye"></i>
@@ -148,7 +148,7 @@
                                         <td class="border border-gray-300 px-2 py-1 text-xs" x-text="index + 1"></td>
                                         <td class="border border-gray-300 px-2 py-1 text-xs" x-text="item.name"></td>
                                         <td class="border border-gray-300 px-2 py-1 text-center text-xs" x-text="item.qty"></td>
-                                        <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'$' + (parseFloat(item.amount) * item.qty).toFixed(2)"></td>
+                                        <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'MMK ' + (parseFloat(item.amount) * item.qty).toFixed(2)"></td>
                                     </tr>
                                 </template>
                             </tbody>
@@ -166,7 +166,7 @@
                                 <template x-for="(item, index) in selectedVoucher?.items" :key="index">
                                     <tr>
                                         <td class="border border-gray-300 px-2 py-1 text-xs" x-text="item.description"></td>
-                                        <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'$' + parseFloat(item.amount).toFixed(2)"></td>
+                                        <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'MMK ' + parseFloat(item.amount).toFixed(2)"></td>
                                     </tr>
                                 </template>
                             </tbody>
@@ -177,7 +177,7 @@
                         <div class="flex justify-end">
                             <div class="w-48">
                                 <label class="block text-xs font-medium text-gray-700 mb-1">TOTAL:</label>
-                                <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 font-bold text-right text-base" x-text="'$' + parseFloat(selectedVoucher?.total_amount).toFixed(2)"></div>
+                                <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 font-bold text-right text-base" x-text="'MMK ' + parseFloat(selectedVoucher?.total_amount).toFixed(2)"></div>
                             </div>
                         </div>
                     </div>

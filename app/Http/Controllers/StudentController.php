@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\StudentStatusLog;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -13,7 +14,7 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Student::with('grade');
+        $query = Student::with('grade', 'subjects');
         
         if ($request->has('status')) {
             $query->where('status', $request->status === 'active');
@@ -46,12 +47,21 @@ class StudentController extends Controller
             'grade_id' => 'required|exists:grades,id',
             'guardian_name' => 'required|string|max:255',
             'guardian_contact' => 'required|string|max:20',
-            'status' => 'sometimes|boolean'
+            'status' => 'sometimes|boolean',
+            'subject_ids' => 'sometimes|array',
+            'subject_ids.*' => 'exists:subjects,id'
         ]);
 
-        $validated['status'] = $validated['status'] ?? true;
+        $validated['status'] = $validated['status'] ?? false; // Default to inactive until registration is confirmed
+        $validated['registration_status'] = 'pending'; // Default to pending registration
         $student = Student::create($validated);
-        $student->load('grade');
+        
+        // Attach subjects if provided
+        if (isset($validated['subject_ids'])) {
+            $student->subjects()->attach($validated['subject_ids']);
+        }
+        
+        $student->load('grade', 'subjects');
         return response()->json($student, 201);
     }
 
@@ -60,7 +70,7 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        $student = Student::with('grade')->findOrFail($id);
+        $student = Student::with('grade', 'subjects')->findOrFail($id);
         return response()->json($student);
     }
 
@@ -78,12 +88,20 @@ class StudentController extends Controller
             'grade_id' => 'required|exists:grades,id',
             'guardian_name' => 'required|string|max:255',
             'guardian_contact' => 'required|string|max:20',
-            'status' => 'boolean'
+            'status' => 'boolean',
+            'subject_ids' => 'sometimes|array',
+            'subject_ids.*' => 'exists:subjects,id'
         ]);
 
         $student = Student::findOrFail($id);
         $student->update($validated);
-        $student->load('grade');
+        
+        // Sync subjects if provided
+        if (isset($validated['subject_ids'])) {
+            $student->subjects()->sync($validated['subject_ids']);
+        }
+        
+        $student->load('grade', 'subjects');
         return response()->json($student);
     }
 

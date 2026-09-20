@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -12,7 +13,7 @@ class TeacherController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Teacher::with('subject');
+        $query = Teacher::with('subjects');
         
         if ($request->has('status')) {
             $query->where('status', $request->status === 'active');
@@ -42,13 +43,20 @@ class TeacherController extends Controller
             'phone' => 'required|string|max:20',
             'nrc_id' => 'required|string|max:50',
             'employment_type' => 'required|in:full-time,part-time',
-            'subject_id' => 'nullable|exists:subjects,id',
-            'status' => 'sometimes|boolean'
+            'status' => 'sometimes|boolean',
+            'subject_ids' => 'sometimes|array',
+            'subject_ids.*' => 'exists:subjects,id'
         ]);
 
         $validated['status'] = $validated['status'] ?? true;
         $teacher = Teacher::create($validated);
-        $teacher->load('subject');
+        
+        // Attach subjects if provided
+        if (isset($validated['subject_ids'])) {
+            $teacher->subjects()->attach($validated['subject_ids']);
+        }
+        
+        $teacher->load('subjects');
         return response()->json($teacher, 201);
     }
 
@@ -57,7 +65,7 @@ class TeacherController extends Controller
      */
     public function show(string $id)
     {
-        $teacher = Teacher::with('subject')->findOrFail($id);
+        $teacher = Teacher::with('subjects')->findOrFail($id);
         return response()->json($teacher);
     }
 
@@ -72,13 +80,20 @@ class TeacherController extends Controller
             'phone' => 'required|string|max:20',
             'nrc_id' => 'required|string|max:50',
             'employment_type' => 'required|in:full-time,part-time',
-            'subject_id' => 'nullable|exists:subjects,id',
-            'status' => 'boolean'
+            'status' => 'boolean',
+            'subject_ids' => 'sometimes|array',
+            'subject_ids.*' => 'exists:subjects,id'
         ]);
 
         $teacher = Teacher::findOrFail($id);
         $teacher->update($validated);
-        $teacher->load('subject');
+        
+        // Sync subjects if provided
+        if (isset($validated['subject_ids'])) {
+            $teacher->subjects()->sync($validated['subject_ids']);
+        }
+        
+        $teacher->load('subjects');
         return response()->json($teacher);
     }
 

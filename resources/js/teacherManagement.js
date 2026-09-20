@@ -13,7 +13,7 @@ export default function teacherManagement() {
             phone: '',
             nrc_id: '',
             employment_type: 'full-time',
-            subject_id: ''
+            subject_ids: []
         },
         editTeacherData: {
             teacher_id: '',
@@ -21,8 +21,8 @@ export default function teacherManagement() {
             phone: '',
             nrc_id: '',
             employment_type: 'full-time',
-            subject_id: '',
-            status: true
+            status: true,
+            subject_ids: []
         },
         currentPage: 1,
         lastPage: 1,
@@ -94,7 +94,7 @@ export default function teacherManagement() {
                         phone: '',
                         nrc_id: '',
                         employment_type: 'full-time',
-                        subject_id: ''
+                        subject_ids: []
                     };
                     this.showAddModal = false;
                     await this.fetchTeachers(this.currentPage);
@@ -112,8 +112,8 @@ export default function teacherManagement() {
                 phone: teacher.phone,
                 nrc_id: teacher.nrc_id,
                 employment_type: teacher.employment_type,
-                subject_id: teacher.subject_id,
-                status: teacher.status
+                status: teacher.status,
+                subject_ids: teacher.subjects ? teacher.subjects.map(s => s.id) : []
             };
             this.showEditModal = true;
         },
@@ -138,8 +138,8 @@ export default function teacherManagement() {
                         phone: '',
                         nrc_id: '',
                         employment_type: 'full-time',
-                        subject_id: '',
-                        status: true
+                        status: true,
+                        subject_ids: []
                     };
                     this.editingTeacher = null;
                     this.showEditModal = false;

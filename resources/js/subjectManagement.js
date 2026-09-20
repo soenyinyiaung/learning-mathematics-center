@@ -5,8 +5,12 @@ export default function subjectManagement() {
         showAddModal: false,
         showEditModal: false,
         editingSubject: null,
-        newSubjectName: '',
-        editSubjectName: '',
+        newSubject: {
+            name: ''
+        },
+        editSubjectData: {
+            name: ''
+        },
         currentPage: 1,
         lastPage: 1,
         
@@ -26,7 +30,7 @@ export default function subjectManagement() {
         },
         
         async addSubject() {
-            if (!this.newSubjectName.trim()) return;
+            if (!this.newSubject.name.trim()) return;
             
             try {
                 const response = await fetch('/api/subjects', {
@@ -35,11 +39,11 @@ export default function subjectManagement() {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({ name: this.newSubjectName })
+                    body: JSON.stringify(this.newSubject)
                 });
                 
                 if (response.ok) {
-                    this.newSubjectName = '';
+                    this.newSubject = { name: '' };
                     this.showAddModal = false;
                     await this.fetchSubjects(this.currentPage);
                 }
@@ -50,12 +54,14 @@ export default function subjectManagement() {
         
         async editSubject(subject) {
             this.editingSubject = subject;
-            this.editSubjectName = subject.name;
+            this.editSubjectData = {
+                name: subject.name
+            };
             this.showEditModal = true;
         },
         
         async updateSubject() {
-            if (!this.editSubjectName.trim() || !this.editingSubject) return;
+            if (!this.editSubjectData.name.trim() || !this.editingSubject) return;
             
             try {
                 const response = await fetch(`/api/subjects/${this.editingSubject.id}`, {
@@ -64,11 +70,11 @@ export default function subjectManagement() {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({ name: this.editSubjectName })
+                    body: JSON.stringify(this.editSubjectData)
                 });
                 
                 if (response.ok) {
-                    this.editSubjectName = '';
+                    this.editSubjectData = { name: '' };
                     this.editingSubject = null;
                     this.showEditModal = false;
                     await this.fetchSubjects(this.currentPage);
