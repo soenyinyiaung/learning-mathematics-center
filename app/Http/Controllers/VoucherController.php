@@ -24,7 +24,7 @@ class VoucherController extends Controller
     {
         try {
             $validated = $request->validate([
-                'type' => 'required|in:sale,student_fee',
+                'type' => 'required|in:sale,student_fee,teacher_salary',
                 'voucher_number' => 'required|string|unique:vouchers',
                 'voucher_date' => 'required|date',
                 'customer_type' => 'nullable|in:general,student',
@@ -33,7 +33,8 @@ class VoucherController extends Controller
                 'student_id' => 'nullable|exists:students,id',
                 'student_id_number' => 'nullable|string',
                 'total_amount' => 'required|numeric',
-                'items' => 'nullable|array'
+                'items' => 'nullable|array',
+                'payment_method' => 'nullable|in:kpay,cash'
             ]);
 
             // Update sale items quantities only for sale type

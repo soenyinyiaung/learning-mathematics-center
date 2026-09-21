@@ -16,7 +16,8 @@ class Voucher extends Model
         'student_id',
         'student_id_number',
         'total_amount',
-        'items'
+        'items',
+        'payment_method'
     ];
 
     protected $casts = [

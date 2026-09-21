@@ -12,6 +12,7 @@ export default function voucherManagement() {
         voucherDate: '',
         cartTotalItems: 0,
         cartTotalPrice: 0,
+        paymentMethod: 'cash',
         
         async init() {
             // Get cart data from localStorage or passed data
@@ -105,7 +106,8 @@ export default function voucherManagement() {
                 student_id: this.selectedStudent || null,
                 student_id_number: this.studentId,
                 total_amount: this.cartTotalPrice,
-                items: this.cart
+                items: this.cart,
+                payment_method: this.paymentMethod
             };
             
             // Print first

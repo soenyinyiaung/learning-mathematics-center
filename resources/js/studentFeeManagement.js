@@ -116,7 +116,7 @@ export default function studentFeeManagement() {
             if (!this.selectedGrade) {
                 return this.students;
             }
-            return this.students.filter(s => s.grade_id == this.selectedGrade);
+            return this.students.filter(s => s.grade && s.grade.id == this.selectedGrade);
         },
         
         filterStudentsByGrade() {
@@ -183,7 +183,11 @@ export default function studentFeeManagement() {
         },
         
         editInvoice(invoice) {
-            this.editingInvoice = { ...invoice };
+            this.editingInvoice = {
+                id: invoice.id,
+                month_year: invoice.month_year,
+                amount: invoice.amount
+            };
             this.showEditModal = true;
         },
         

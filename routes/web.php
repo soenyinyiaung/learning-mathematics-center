@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SubjectController;
@@ -43,6 +44,12 @@ Route::prefix('api')->group(function () {
     Route::apiResource('students', StudentController::class);
     Route::post('students/{id}/toggle-status', [StudentController::class, 'toggleStatus']);
     Route::apiResource('student-registrations', StudentRegistrationController::class);
+    Route::post('student-registrations/{id}/approve', [StudentRegistrationController::class, 'approve']);
+    Route::post('student-registrations/{id}/reject', [StudentRegistrationController::class, 'reject']);
+    Route::apiResource('academic-years', AcademicYearController::class);
+    Route::get('academic-years/{academicYearId}/grades/{gradeId}/students', [AcademicYearController::class, 'getStudents']);
+    Route::post('academic-years/{academicYearId}/students', [AcademicYearController::class, 'addStudent']);
+    Route::delete('academic-years/{academicYearId}/students/{studentId}', [AcademicYearController::class, 'removeStudent']);
     Route::apiResource('teachers', TeacherController::class);
     Route::post('teachers/{id}/toggle-status', [TeacherController::class, 'toggleStatus']);
     Route::apiResource('teacher-salaries', TeacherSalaryController::class);
@@ -69,6 +76,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/student-registrations', function () {
         return view('admin.student-registrations', ['title' => 'Student Registrations']);
     })->name('admin.student-registrations')->middleware('auth');
+
+    Route::get('/academic-years', function () {
+        return view('admin.academic-years', ['title' => 'Academic Years']);
+    })->name('admin.academic-years')->middleware('auth');
 
     Route::get('/student-fees', function () {
         return view('admin.student-fees', ['title' => 'Student Fees']);

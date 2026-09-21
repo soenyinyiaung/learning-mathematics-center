@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Student;
 use App\Models\GradeSubjectFee;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -82,32 +83,45 @@ class InvoiceController extends Controller
         try {
             $student = Student::with('subjects')->findOrFail($studentId);
             $totalFee = 0;
-            
-            if (!$student->grade_id) {
-                \Log::info("Student {$studentId} has no grade assigned");
+
+            // Get student's grade from student_academic_year table (latest academic year)
+            $latestAcademicYear = AcademicYear::orderBy('start_year', 'desc')->first();
+            if (!$latestAcademicYear) {
+                \Log::info("No academic year found");
                 return 0;
             }
-            
+
+            $studentAcademicYear = $student->academicYears()
+                ->where('academic_year_id', $latestAcademicYear->id)
+                ->first();
+
+            if (!$studentAcademicYear) {
+                \Log::info("Student {$studentId} has no grade assigned in academic year {$latestAcademicYear->id}");
+                return 0;
+            }
+
+            $gradeId = $studentAcademicYear->pivot->grade_id;
+
             if ($student->subjects->isEmpty()) {
                 \Log::info("Student {$studentId} has no subjects assigned");
                 return 0;
             }
-            
-            \Log::info("Calculating fee for student {$studentId}, grade {$student->grade_id}, subjects: " . $student->subjects->pluck('id')->implode(','));
-            
+
+            \Log::info("Calculating fee for student {$studentId}, grade {$gradeId}, subjects: " . $student->subjects->pluck('id')->implode(','));
+
             foreach ($student->subjects as $subject) {
-                $gradeSubjectFee = GradeSubjectFee::where('grade_id', $student->grade_id)
+                $gradeSubjectFee = GradeSubjectFee::where('grade_id', $gradeId)
                     ->where('subject_id', $subject->id)
                     ->first();
-                
+
                 if ($gradeSubjectFee) {
                     $totalFee += $gradeSubjectFee->fee;
-                    \Log::info("Found fee for grade {$student->grade_id}, subject {$subject->id}: {$gradeSubjectFee->fee}");
+                    \Log::info("Found fee for grade {$gradeId}, subject {$subject->id}: {$gradeSubjectFee->fee}");
                 } else {
-                    \Log::info("No fee found for grade {$student->grade_id}, subject {$subject->id}");
+                    \Log::info("No fee found for grade {$gradeId}, subject {$subject->id}");
                 }
             }
-            
+
             \Log::info("Total fee for student {$studentId}: {$totalFee}");
             return $totalFee > 0 ? $totalFee : 0;
         } catch (\Exception $e) {

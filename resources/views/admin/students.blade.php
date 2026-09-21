@@ -124,15 +124,9 @@
                 <h3 class="text-lg font-semibold text-gray-800">Add New Student</h3>
             </div>
             <div class="p-6 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Student ID</label>
-                        <input type="text" x-model="newStudent.student_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter student ID">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
-                        <input type="text" x-model="newStudent.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter name">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                    <input type="text" x-model="newStudent.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter name">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -144,20 +138,9 @@
                         <input type="date" x-model="newStudent.birthday" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">NRC ID</label>
-                        <input type="text" x-model="newStudent.nrc_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter NRC ID">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Grade</label>
-                        <select x-model="newStudent.grade_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">Select Grade</option>
-                            <template x-for="grade in grades" :key="grade.id">
-                                <option :value="grade.id" x-text="grade.name"></option>
-                            </template>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">NRC ID</label>
+                    <input type="text" x-model="newStudent.nrc_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter NRC ID">
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-3">Guardian Information</h4>
@@ -188,7 +171,7 @@
                 </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showAddModal = false; newStudent = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: '', subject_ids: []}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showAddModal = false; newStudent = {name: '', phone: '', birthday: '', nrc_id: '', guardian_name: '', guardian_contact: '', subject_ids: []}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="addStudent()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Add Student</button>
             </div>
         </div>
@@ -201,15 +184,9 @@
                 <h3 class="text-lg font-semibold text-gray-800">Edit Student</h3>
             </div>
             <div class="p-6 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Student ID</label>
-                        <input type="text" x-model="editStudentData.student_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter student ID">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
-                        <input type="text" x-model="editStudentData.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter name">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                    <input type="text" x-model="editStudentData.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter name">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -221,20 +198,9 @@
                         <input type="date" x-model="editStudentData.birthday" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">NRC ID</label>
-                        <input type="text" x-model="editStudentData.nrc_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter NRC ID">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Grade</label>
-                        <select x-model="editStudentData.grade_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">Select Grade</option>
-                            <template x-for="grade in grades" :key="grade.id">
-                                <option :value="grade.id" x-text="grade.name"></option>
-                            </template>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">NRC ID</label>
+                    <input type="text" x-model="editStudentData.nrc_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter NRC ID">
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-3">Guardian Information</h4>
@@ -269,7 +235,7 @@
                 </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showEditModal = false; editStudentData = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: '', status: true, subject_ids: []}; editingStudent = null" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showEditModal = false; editStudentData = {name: '', phone: '', birthday: '', nrc_id: '', guardian_name: '', guardian_contact: '', status: true, subject_ids: []}; editingStudent = null" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="updateStudent()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Update Student</button>
             </div>
         </div>

@@ -6,6 +6,7 @@ export default function feeVoucherManagement() {
         voucherDate: '',
         discount: 0,
         studentSubjects: [],
+        paymentMethod: 'cash',
         
         init() {
             this.voucherDate = new Date().toISOString().split('T')[0];
@@ -32,10 +33,20 @@ export default function feeVoucherManagement() {
                     
                     if (student.subjects && student.subjects.length > 0) {
                         // Fetch grade subject fees for each subject
+                        const gradeId = student.grade ? student.grade.id : null;
+                        if (!gradeId) {
+                            console.error('Student has no grade assigned');
+                            this.studentSubjects = student.subjects.map(subject => ({
+                                name: subject.name,
+                                amount: 0
+                            }));
+                            return;
+                        }
+
                         const subjectFees = await Promise.all(
                             student.subjects.map(async (subject) => {
                                 try {
-                                    const feeResponse = await fetch(`/api/grade-subject-fees/grade/${student.grade_id}`);
+                                    const feeResponse = await fetch(`/api/grade-subject-fees/grade/${gradeId}`);
                                     if (feeResponse.ok) {
                                         const feeData = await feeResponse.json();
                                         const feeDataArray = feeData.data || feeData;
@@ -120,7 +131,8 @@ export default function feeVoucherManagement() {
                             student_id: this.invoice.student.id,
                             student_id_number: this.invoice.student.student_id,
                             total_amount: this.totalAmount,
-                            items: items
+                            items: items,
+                            payment_method: this.paymentMethod
                         })
                     });
                     

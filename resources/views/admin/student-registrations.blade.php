@@ -11,15 +11,9 @@
         </div>
         
         <div class="p-6">
-            <!-- Search and Filter Section -->
-            <div class="mb-6 flex gap-4">
-                <input type="text" x-model="searchQuery" @input="searchRegistrations()" placeholder="Search by student name or ID..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                <select x-model="filterStatus" @change="searchRegistrations()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                    <option value="">All Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="confirmed">Confirmed</option>
-                    <option value="rejected">Rejected</option>
-                </select>
+            <!-- Search Section -->
+            <div class="mb-6">
+                <input type="text" x-model="searchQuery" @input="searchRegistrations()" placeholder="Search by student name..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
             </div>
             
             <!-- Registration List -->
@@ -37,45 +31,28 @@
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-200">
                                 <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Student</th>
-                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Student ID</th>
                                 <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Grade</th>
                                 <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Guardian</th>
                                 <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Phone</th>
-                                <th class="px-4 py-3 text-center text-sm font-medium text-gray-700">Registration Status</th>
                                 <th class="px-4 py-3 text-center text-sm font-medium text-gray-700">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <template x-for="student in registrations" :key="student.id">
+                            <template x-for="registration in registrations" :key="registration.id">
                                 <tr class="border-b border-gray-200 hover:bg-gray-50">
-                                    <td class="px-4 py-3 text-sm text-gray-800 font-medium" x-text="student.name"></td>
-                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="student.student_id"></td>
-                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="student.grade ? student.grade.name : 'N/A'"></td>
-                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="student.guardian_name"></td>
-                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="student.phone"></td>
-                                    <td class="px-4 py-3 text-center text-sm">
-                                        <span class="px-2 py-1 rounded text-xs" 
-                                              :class="{
-                                                  'bg-yellow-100 text-yellow-800': student.registration_status === 'pending',
-                                                  'bg-green-100 text-green-800': student.registration_status === 'confirmed',
-                                                  'bg-red-100 text-red-800': student.registration_status === 'rejected'
-                                              }"
-                                              x-text="student.registration_status"></span>
-                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-800 font-medium" x-text="registration.name"></td>
+                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="registration.grade ? registration.grade.name : 'N/A'"></td>
+                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="registration.guardian_name"></td>
+                                    <td class="px-4 py-3 text-sm text-gray-600" x-text="registration.phone"></td>
                                     <td class="px-4 py-3 text-center">
-                                        <template x-if="student.registration_status === 'pending'">
-                                            <div class="flex justify-center gap-2">
-                                                <button @click="confirmRegistration(student)" class="text-green-600 hover:text-green-800 cursor-pointer" title="Confirm">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button @click="rejectRegistration(student)" class="text-red-600 hover:text-red-800 cursor-pointer" title="Reject">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </template>
-                                        <template x-if="student.registration_status !== 'pending'">
-                                            <span class="text-gray-400 text-sm">Processed</span>
-                                        </template>
+                                        <div class="flex justify-center gap-2">
+                                            <button @click="confirmRegistration(registration)" class="text-green-600 hover:text-green-800 cursor-pointer" title="Confirm">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button @click="rejectRegistration(registration)" class="text-red-600 hover:text-red-800 cursor-pointer" title="Reject">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             </template>
@@ -110,15 +87,9 @@
                 <h3 class="text-lg font-semibold text-gray-800">Add Student Registration</h3>
             </div>
             <div class="p-6 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Student ID</label>
-                        <input type="text" x-model="newRegistration.student_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter student ID">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                        <input type="text" x-model="newRegistration.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter full name">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" x-model="newRegistration.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter full name">
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
@@ -137,20 +108,19 @@
                     <input type="text" x-model="newRegistration.nrc_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter NRC number">
                 </div>
                 
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Grade</label>
-                        <select x-model="newRegistration.grade_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">Select Grade</option>
-                            <template x-for="grade in grades" :key="grade.id">
-                                <option :value="grade.id" x-text="grade.name"></option>
-                            </template>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Guardian Name</label>
-                        <input type="text" x-model="newRegistration.guardian_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter guardian name">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Grade</label>
+                    <select x-model="newRegistration.grade_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select Grade</option>
+                        <template x-for="grade in grades" :key="grade.id">
+                            <option :value="grade.id" x-text="grade.name"></option>
+                        </template>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Guardian Name</label>
+                    <input type="text" x-model="newRegistration.guardian_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter guardian name">
                 </div>
                 
                 <div>
@@ -171,7 +141,7 @@
                 </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
-                <button @click="showAddModal = false; newRegistration = {student_id: '', name: '', phone: '', birthday: '', nrc_id: '', grade_id: '', guardian_name: '', guardian_contact: '', subject_ids: []}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
+                <button @click="showAddModal = false; newRegistration = {name: '', phone: '', birthday: '', nrc_id: '', guardian_name: '', guardian_contact: '', subject_ids: []}" class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-50">Cancel</button>
                 <button @click="addRegistration()" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Add Registration</button>
             </div>
         </div>

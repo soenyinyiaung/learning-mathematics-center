@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicYear;
+use App\Models\Grade;
 use App\Models\Student;
 use App\Models\StudentStatusLog;
 use App\Models\Subject;
@@ -14,7 +16,7 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Student::with('grade', 'subjects');
+        $query = Student::with('subjects');
         
         if ($request->has('status')) {
             $query->where('status', $request->status === 'active');
@@ -30,6 +32,15 @@ class StudentController extends Controller
         }
         
         $students = $query->paginate(20);
+        
+        // Load grade information for each student based on latest academic year
+        $latestAcademicYear = AcademicYear::orderBy('start_year', 'desc')->first();
+        if ($latestAcademicYear) {
+            foreach ($students as $student) {
+                $student->grade = $student->gradeForAcademicYear($latestAcademicYear->id);
+            }
+        }
+        
         return response()->json($students);
     }
 
@@ -39,12 +50,10 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'student_id' => 'required|string|unique:students,student_id',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'birthday' => 'required|date',
             'nrc_id' => 'required|string|max:50',
-            'grade_id' => 'required|exists:grades,id',
             'guardian_name' => 'required|string|max:255',
             'guardian_contact' => 'required|string|max:20',
             'status' => 'sometimes|boolean',
@@ -52,8 +61,7 @@ class StudentController extends Controller
             'subject_ids.*' => 'exists:subjects,id'
         ]);
 
-        $validated['status'] = $validated['status'] ?? false; // Default to inactive until registration is confirmed
-        $validated['registration_status'] = 'pending'; // Default to pending registration
+        $validated['status'] = $validated['status'] ?? true;
         $student = Student::create($validated);
         
         // Attach subjects if provided
@@ -61,7 +69,7 @@ class StudentController extends Controller
             $student->subjects()->attach($validated['subject_ids']);
         }
         
-        $student->load('grade', 'subjects');
+        $student->load('subjects');
         return response()->json($student, 201);
     }
 
@@ -70,7 +78,14 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        $student = Student::with('grade', 'subjects')->findOrFail($id);
+        $student = Student::with('subjects')->findOrFail($id);
+        
+        // Load grade from latest academic year
+        $latestAcademicYear = AcademicYear::orderBy('start_year', 'desc')->first();
+        if ($latestAcademicYear) {
+            $student->grade = $student->gradeForAcademicYear($latestAcademicYear->id);
+        }
+        
         return response()->json($student);
     }
 
@@ -80,12 +95,10 @@ class StudentController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'student_id' => 'required|string|unique:students,student_id,' . $id,
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'birthday' => 'required|date',
             'nrc_id' => 'required|string|max:50',
-            'grade_id' => 'required|exists:grades,id',
             'guardian_name' => 'required|string|max:255',
             'guardian_contact' => 'required|string|max:20',
             'status' => 'boolean',
@@ -101,7 +114,7 @@ class StudentController extends Controller
             $student->subjects()->sync($validated['subject_ids']);
         }
         
-        $student->load('grade', 'subjects');
+        $student->load('subjects');
         return response()->json($student);
     }
 

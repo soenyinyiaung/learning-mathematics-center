@@ -64,6 +64,14 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">Phone:</label>
                             <input type="text" x-model="customerPhone" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter phone number">
                         </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method:</label>
+                            <select x-model="paymentMethod" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="cash">Cash</option>
+                                <option value="kpay">Kpay</option>
+                            </select>
+                        </div>
                         
                         <div class="flex gap-3 mt-6">
                             <button @click="generateVoucher()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg transition-colors">
@@ -76,76 +84,76 @@
                     </div>
                     
                     <!-- Voucher Preview Section -->
-                    <div class="border-2 border-gray-300 p-4 bg-white" id="voucher-print">
+                    <div class="border-2 border-gray-300 p-3 bg-white" id="voucher-print">
                         <!-- Header -->
-                        <div class="text-center mb-3">
-                            <h2 class="text-xl font-bold text-gray-800">LEARNING MATHEMATICS CENTER</h2>
-                            <p class="text-sm text-gray-600">Mathematics Education Center</p>
-                            <p class="text-xs text-gray-500">Phone: 09-xxx-xxx-xxx | Email: info@lmc.com</p>
+                        <div class="text-center mb-2">
+                            <h2 class="text-sm font-bold text-gray-800">Tr. Khaing Learning Center</h2>
+                            <p class="text-xs text-gray-600">Room No. (8,9,10) Padamyar Street,<br>Forest Quarter, Taunggyi.</p>
+                            <p class="text-xs text-gray-500">ph: 09428311721, 09253947310, 09429911919</p>
                         </div>
-                        
+
                         <!-- Voucher Info -->
-                        <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div class="grid grid-cols-2 gap-1 mb-2">
                             <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Voucher No:</label>
-                                <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 text-sm" x-text="voucherNumber"></div>
+                                <label class="block text-xs font-medium text-gray-700 mb-0.5">Voucher No:</label>
+                                <div class="w-full px-1 py-0.5 border border-gray-300 rounded bg-gray-50 text-xs" x-text="voucherNumber"></div>
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Date:</label>
-                                <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 text-sm" x-text="voucherDate"></div>
+                                <label class="block text-xs font-medium text-gray-700 mb-0.5">Date:</label>
+                                <div class="w-full px-1 py-0.5 border border-gray-300 rounded bg-gray-50 text-xs" x-text="voucherDate"></div>
                             </div>
                         </div>
-                        
+
                         <!-- Customer Info -->
-                        <div class="mb-3">
-                            <label class="block text-xs font-medium text-gray-700 mb-1">
+                        <div class="mb-2">
+                            <label class="block text-xs font-medium text-gray-700 mb-0.5">
                                 <span x-text="customerType === 'student' ? 'Student Name:' : 'Customer Name (Mr/Ms):'"></span>
                             </label>
-                            <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 text-sm" x-text="customerType === 'student' ? (students.find(s => s.id === selectedStudent)?.name || '') : customerName"></div>
+                            <div class="w-full px-1 py-0.5 border border-gray-300 rounded bg-gray-50 text-xs" x-text="customerType === 'student' ? (students.find(s => s.id === selectedStudent)?.name || '') : customerName"></div>
                         </div>
-                        
-                        <div x-show="customerType === 'student'" class="mb-3">
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Student ID:</label>
-                            <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 text-sm" x-text="studentId"></div>
+
+                        <div x-show="customerType === 'student'" class="mb-2">
+                            <label class="block text-xs font-medium text-gray-700 mb-0.5">Student ID:</label>
+                            <div class="w-full px-1 py-0.5 border border-gray-300 rounded bg-gray-50 text-xs" x-text="studentId"></div>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label class="block text-xs font-medium text-gray-700 mb-1">Phone:</label>
-                            <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 text-sm" x-text="customerPhone"></div>
+
+                        <div class="mb-2">
+                            <label class="block text-xs font-medium text-gray-700 mb-0.5">Phone:</label>
+                            <div class="w-full px-1 py-0.5 border border-gray-300 rounded bg-gray-50 text-xs" x-text="customerPhone"></div>
                         </div>
-                        
+
                         <!-- Items Table -->
-                        <div class="mb-3">
-                            <table class="w-full border-collapse border border-gray-300 text-sm">
+                        <div class="mb-2">
+                            <table class="w-full border-collapse border border-gray-300 text-xs">
                                 <thead>
                                     <tr class="bg-gray-100">
-                                        <th class="border border-gray-300 px-2 py-1 text-left text-xs">No</th>
-                                        <th class="border border-gray-300 px-2 py-1 text-left text-xs">Description</th>
-                                        <th class="border border-gray-300 px-2 py-1 text-center text-xs">Qty</th>
-                                        <th class="border border-gray-300 px-2 py-1 text-right text-xs">Amount</th>
+                                        <th class="border border-gray-300 px-1 py-0.5 text-left text-xs">Item</th>
+                                        <th class="border border-gray-300 px-1 py-0.5 text-center text-xs">Qty</th>
+                                        <th class="border border-gray-300 px-1 py-0.5 text-right text-xs">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <template x-for="(cartItem, index) in cart" :key="index">
                                         <tr>
-                                            <td class="border border-gray-300 px-2 py-1 text-xs" x-text="index + 1"></td>
-                                            <td class="border border-gray-300 px-2 py-1 text-xs" x-text="cartItem.name"></td>
-                                            <td class="border border-gray-300 px-2 py-1 text-center text-xs" x-text="cartItem.qty"></td>
-                                            <td class="border border-gray-300 px-2 py-1 text-right text-xs" x-text="'MMK ' + (parseFloat(cartItem.amount) * cartItem.qty).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></td>
+                                            <td class="border border-gray-300 px-1 py-0.5 text-xs" x-text="cartItem.name"></td>
+                                            <td class="border border-gray-300 px-1 py-0.5 text-center text-xs" x-text="cartItem.qty"></td>
+                                            <td class="border border-gray-300 px-1 py-0.5 text-right text-xs" x-text="(parseFloat(cartItem.amount) * cartItem.qty).toFixed(2)"></td>
                                         </tr>
                                     </template>
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <!-- Total -->
-                        <div class="mb-3">
-                            <div class="flex justify-end">
-                                <div class="w-48">
-                                    <label class="block text-xs font-medium text-gray-700 mb-1">TOTAL:</label>
-                                    <div class="w-full px-2 py-1 border border-gray-300 rounded bg-gray-50 font-bold text-right text-base" x-text="'MMK ' + cartTotalPrice.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})"></div>
-                                </div>
+                        <div class="border-t-2 border-gray-300 pt-2 mb-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-gray-800">Total:</span>
+                                <span class="text-sm font-bold text-gray-800" x-text="cartTotalPrice.toFixed(2) + ' MMK'"></span>
                             </div>
+                        </div>
+
+                        <div class="border-t border-dashed border-gray-300 pt-2">
+                            <p class="text-xs text-gray-600 text-center">သင်တန်းကြေးများကို လ၏ပထမအပတ်တွင် ပေးသွင်းပေးပါရန်။</p>
                         </div>
                     </div>
                 </div>
@@ -167,9 +175,9 @@
         left: 0;
         top: 0;
         width: 100%;
-        max-width: 400px;
+        max-width: 280px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 10px;
     }
 }
 </style>

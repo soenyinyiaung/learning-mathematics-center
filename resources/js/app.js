@@ -16,6 +16,7 @@ import feeVoucherManagement from './feeVoucherManagement';
 import settingManagement from './settingManagement';
 import gradeSubjectFeeManagement from './gradeSubjectFeeManagement';
 import studentRegistrationManagement from './studentRegistrationManagement';
+import academicYearManagement from './academicYearManagement';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 window.Alpine = Alpine;
@@ -37,6 +38,7 @@ Alpine.data('feeVoucherManagement', feeVoucherManagement);
 Alpine.data('settingManagement', settingManagement);
 Alpine.data('gradeSubjectFeeManagement', gradeSubjectFeeManagement);
 Alpine.data('studentRegistrationManagement', studentRegistrationManagement);
+Alpine.data('academicYearManagement', academicYearManagement);
 
 document.addEventListener('DOMContentLoaded', () => {
     Alpine.start();

@@ -3,17 +3,14 @@ export default function studentRegistrationManagement() {
         registrations: [],
         loading: false,
         searchQuery: '',
-        filterStatus: '',
         currentPage: 1,
         lastPage: 1,
         showAddModal: false,
         newRegistration: {
-            student_id: '',
             name: '',
             phone: '',
             birthday: '',
             nrc_id: '',
-            grade_id: '',
             guardian_name: '',
             guardian_contact: '',
             subject_ids: []
@@ -32,10 +29,6 @@ export default function studentRegistrationManagement() {
             try {
                 let url = '/api/student-registrations?page=' + page;
                 const params = new URLSearchParams();
-                
-                if (this.filterStatus) {
-                    params.append('status', this.filterStatus);
-                }
                 
                 if (this.searchQuery) {
                     params.append('search', this.searchQuery);
@@ -63,19 +56,16 @@ export default function studentRegistrationManagement() {
             await this.fetchRegistrations();
         },
         
-        async confirmRegistration(student) {
-            if (!confirm(`Are you sure you want to confirm ${student.name}'s registration?`)) return;
+        async confirmRegistration(registration) {
+            if (!confirm(`Are you sure you want to confirm ${registration.name}'s registration?`)) return;
             
             try {
-                const response = await fetch(`/api/student-registrations/${student.id}`, {
-                    method: 'PUT',
+                const response = await fetch(`/api/student-registrations/${registration.id}/approve`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        registration_status: 'confirmed'
-                    })
+                    }
                 });
                 
                 if (response.ok) {
@@ -91,19 +81,16 @@ export default function studentRegistrationManagement() {
             }
         },
         
-        async rejectRegistration(student) {
-            if (!confirm(`Are you sure you want to reject ${student.name}'s registration?`)) return;
+        async rejectRegistration(registration) {
+            if (!confirm(`Are you sure you want to reject ${registration.name}'s registration?`)) return;
             
             try {
-                const response = await fetch(`/api/student-registrations/${student.id}`, {
-                    method: 'PUT',
+                const response = await fetch(`/api/student-registrations/${registration.id}/reject`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        registration_status: 'rejected'
-                    })
+                    }
                 });
                 
                 if (response.ok) {
@@ -148,7 +135,7 @@ export default function studentRegistrationManagement() {
         },
         
         async addRegistration() {
-            if (!this.newRegistration.student_id || !this.newRegistration.name || !this.newRegistration.phone || 
+            if (!this.newRegistration.name || !this.newRegistration.phone || 
                 !this.newRegistration.birthday || !this.newRegistration.nrc_id || !this.newRegistration.grade_id || 
                 !this.newRegistration.guardian_name || !this.newRegistration.guardian_contact) {
                 alert('Please fill in all required fields');
@@ -161,7 +148,7 @@ export default function studentRegistrationManagement() {
             }
             
             try {
-                const response = await fetch('/api/students', {
+                const response = await fetch('/api/student-registrations', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -174,12 +161,10 @@ export default function studentRegistrationManagement() {
                     alert('Registration added successfully');
                     this.showAddModal = false;
                     this.newRegistration = {
-                        student_id: '',
                         name: '',
                         phone: '',
                         birthday: '',
                         nrc_id: '',
-                        grade_id: '',
                         guardian_name: '',
                         guardian_contact: '',
                         subject_ids: []

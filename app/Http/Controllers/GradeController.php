@@ -12,7 +12,7 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = Grade::withCount('students')->paginate(40);
+        $grades = Grade::paginate(40);
         return response()->json($grades);
     }
 

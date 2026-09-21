@@ -9,23 +9,19 @@ export default function studentManagement() {
         editingStudent: null,
         activeTab: 'active',
         newStudent: {
-            student_id: '',
             name: '',
             phone: '',
             birthday: '',
             nrc_id: '',
-            grade_id: '',
             guardian_name: '',
             guardian_contact: '',
             subject_ids: []
         },
         editStudentData: {
-            student_id: '',
             name: '',
             phone: '',
             birthday: '',
             nrc_id: '',
-            grade_id: '',
             guardian_name: '',
             guardian_contact: '',
             status: true,
@@ -92,7 +88,7 @@ export default function studentManagement() {
         },
         
         async addStudent() {
-            if (!this.newStudent.student_id.trim() || !this.newStudent.name.trim()) return;
+            if (!this.newStudent.name.trim()) return;
             
             try {
                 const response = await fetch('/api/students', {
@@ -106,12 +102,10 @@ export default function studentManagement() {
                 
                 if (response.ok) {
                     this.newStudent = {
-                        student_id: '',
                         name: '',
                         phone: '',
                         birthday: '',
                         nrc_id: '',
-                        grade_id: '',
                         guardian_name: '',
                         guardian_contact: '',
                         subject_ids: []
@@ -127,12 +121,10 @@ export default function studentManagement() {
         async editStudent(student) {
             this.editingStudent = student;
             this.editStudentData = {
-                student_id: student.student_id,
                 name: student.name,
                 phone: student.phone,
                 birthday: student.birthday,
                 nrc_id: student.nrc_id,
-                grade_id: student.grade_id,
                 guardian_name: student.guardian_name,
                 guardian_contact: student.guardian_contact,
                 status: student.status,
@@ -142,7 +134,7 @@ export default function studentManagement() {
         },
         
         async updateStudent() {
-            if (!this.editStudentData.student_id.trim() || !this.editStudentData.name.trim() || !this.editingStudent) return;
+            if (!this.editStudentData.name.trim() || !this.editingStudent) return;
             
             try {
                 const response = await fetch(`/api/students/${this.editingStudent.id}`, {
@@ -156,12 +148,10 @@ export default function studentManagement() {
                 
                 if (response.ok) {
                     this.editStudentData = {
-                        student_id: '',
                         name: '',
                         phone: '',
                         birthday: '',
                         nrc_id: '',
-                        grade_id: '',
                         guardian_name: '',
                         guardian_contact: '',
                         status: true,

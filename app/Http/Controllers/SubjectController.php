@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicYear;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -68,13 +69,18 @@ class SubjectController extends Controller
     public function getStudents(string $id, Request $request)
     {
         $subject = Subject::findOrFail($id);
-        $query = $subject->students()->with('grade');
-        
-        if ($request->has('grade_id') && $request->grade_id) {
-            $query->where('grade_id', $request->grade_id);
-        }
+        $query = $subject->students();
         
         $students = $query->paginate($request->get('per_page', 10));
+        
+        // Load grade information for each student based on latest academic year
+        $latestAcademicYear = \App\Models\AcademicYear::orderBy('start_year', 'desc')->first();
+        if ($latestAcademicYear) {
+            foreach ($students as $student) {
+                $student->grade = $student->gradeForAcademicYear($latestAcademicYear->id);
+            }
+        }
+        
         return response()->json($students);
     }
 

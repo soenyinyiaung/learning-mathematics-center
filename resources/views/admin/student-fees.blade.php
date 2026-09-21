@@ -141,11 +141,11 @@
             <div class="p-6 space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Month/Year</label>
-                    <input type="text" x-model="editingInvoice.month_year" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" readonly>
+                    <input type="text" :value="editingInvoice?.month_year" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" readonly>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Amount (MMK)</label>
-                    <input type="number" x-model="editingInvoice.amount" min="0" step="1000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="number" :value="editingInvoice?.amount" @input="editingInvoice.amount = $event.target.value" min="0" step="1000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
             </div>
             <div class="p-6 border-t border-gray-200 flex justify-end gap-3">

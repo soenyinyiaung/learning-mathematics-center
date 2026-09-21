@@ -8,7 +8,6 @@ export default function teacherManagement() {
         editingTeacher: null,
         activeTab: 'active',
         newTeacher: {
-            teacher_id: '',
             name: '',
             phone: '',
             nrc_id: '',
@@ -75,8 +74,8 @@ export default function teacherManagement() {
         },
         
         async addTeacher() {
-            if (!this.newTeacher.teacher_id.trim() || !this.newTeacher.name.trim()) return;
-            
+            if (!this.newTeacher.name.trim()) return;
+
             try {
                 const response = await fetch('/api/teachers', {
                     method: 'POST',
@@ -86,10 +85,9 @@ export default function teacherManagement() {
                     },
                     body: JSON.stringify(this.newTeacher)
                 });
-                
+
                 if (response.ok) {
                     this.newTeacher = {
-                        teacher_id: '',
                         name: '',
                         phone: '',
                         nrc_id: '',
@@ -119,8 +117,8 @@ export default function teacherManagement() {
         },
         
         async updateTeacher() {
-            if (!this.editTeacherData.teacher_id.trim() || !this.editTeacherData.name.trim() || !this.editingTeacher) return;
-            
+            if (!this.editTeacherData.name.trim() || !this.editingTeacher) return;
+
             try {
                 const response = await fetch(`/api/teachers/${this.editingTeacher.id}`, {
                     method: 'PUT',
@@ -130,7 +128,7 @@ export default function teacherManagement() {
                     },
                     body: JSON.stringify(this.editTeacherData)
                 });
-                
+
                 if (response.ok) {
                     this.editTeacherData = {
                         teacher_id: '',
